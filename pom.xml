@@ -1,0 +1,151 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.datamininglab</groupId>
+		<artifactId>eri-maven-base</artifactId>
+		<version>3.0.2</version>
+	</parent>
+	
+	<groupId>com.datamininglab.commons</groupId>
+	<artifactId>eri-commons-xsd</artifactId>
+	<name>ERI Commons - XSD Utilities</name>
+	<description>Utilities for XML schema documents (XSD)</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<scm>code.elderresearch.com</scm>
+	</properties>
+	
+	<scm>
+		<developerConnection>scm:git:https://${scm}/eri-commons/eri-xsd.git</developerConnection>
+		<connection>scm:git:http://${scm}/eri-commons/eri-xsd.git</connection>
+		<url>http://${scm}/summary/eri-commons%2Feri-xsd.git</url>
+	</scm>
+
+	<build>
+		<plugins>
+		    <!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.11.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Child projects should instantiate this plugin to add warning suppressions -->
+			<plugin>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<basedir>${project.basedir}</basedir>
+					<includes>
+						<include>target/generated-sources/xjc/**/*.java</include>
+					</includes>
+		
+					<regex>true</regex>
+					<regexFlags>
+						<regexFlag>MULTILINE</regexFlag>
+					</regexFlags>
+					
+					<replacements>
+						<replacement>
+							<token>^public class</token>
+							<value>@SuppressWarnings("all") public class</value>
+						</replacement>
+						<replacement>
+							<token>^public abstract class</token>
+							<value>@SuppressWarnings("all") public abstract class</value>
+						</replacement>
+					</replacements>
+				</configuration>
+			</plugin>
+			
+			<!-- Attach the XMLCodec class even though we're POM packaging -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+			  	<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${project.artifactId}-${project.version}</file>
+									<type>jar</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.google.code.maven-replacer-plugin</groupId>
+										<artifactId>replacer</artifactId>
+										<versionRange>[1.5.3,)</versionRange>
+										<goals>
+											<goal>replace</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnConfiguration>false</runOnConfiguration>
+											<runOnIncremental>true</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
