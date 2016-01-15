@@ -11,7 +11,7 @@
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
 	<properties>
@@ -22,7 +22,7 @@
 		<developerConnection>scm:git:https://${scm}/eri-commons/eri-xsd.git</developerConnection>
 		<connection>scm:git:http://${scm}/eri-commons/eri-xsd.git</connection>
 		<url>http://${scm}/summary/eri-commons%2Feri-xsd.git</url>
-      <tag>eri-commons-xsd-parent-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
     
     <modules>
