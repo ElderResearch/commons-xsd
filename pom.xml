@@ -43,6 +43,19 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<args>
+						<arg>-Ximmutable</arg>
+						<arg>-Xfluent-builder</arg>
+					</args>
+					<plugins>
+						<plugin>
+							<groupId>net.codesup.util</groupId>
+							<artifactId>jaxb2-rich-contract-plugin</artifactId>
+							<version>1.15.0</version>
+						</plugin>
+					</plugins>
+				</configuration>
 			</plugin>
 			
 			<!-- Child projects should instantiate this plugin to add warning suppressions -->
