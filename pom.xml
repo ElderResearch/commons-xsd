@@ -8,8 +8,8 @@
 	</parent>
 	
 	<groupId>com.datamininglab.commons</groupId>
-	<artifactId>eri-commons-xsd</artifactId>
-	<name>ERI Commons - XSD Utilities</name>
+	<artifactId>eri-commons-xsd-parent</artifactId>
+	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -22,9 +22,12 @@
 		<developerConnection>scm:git:https://${scm}/eri-commons/eri-xsd.git</developerConnection>
 		<connection>scm:git:http://${scm}/eri-commons/eri-xsd.git</connection>
 		<url>http://${scm}/summary/eri-commons%2Feri-xsd.git</url>
-	  <tag>HEAD</tag>
-  </scm>
-
+    </scm>
+    
+    <modules>
+        <module>xsd</module>
+    </modules>
+    
 	<build>
 		<plugins>
 		    <!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
@@ -75,44 +78,6 @@
 						</replacement>
 					</replacements>
 				</configuration>
-			</plugin>
-			
-			<!-- Attach the XMLCodec class even though we're POM packaging -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-			  	<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.10</version>
-				<executions>
-					<execution>
-						<id>attach-artifacts</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attach-artifact</goal>
-						</goals>
-						<configuration>
-							<artifacts>
-								<artifact>
-									<file>${project.artifactId}-${project.version}</file>
-									<type>jar</type>
-								</artifact>
-							</artifacts>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 		
