@@ -1,10 +1,12 @@
 package com.datamininglab.commons.xsd;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -53,8 +55,9 @@ public class XMLCodec<T> {
 	 * @throws IOException if there was a problem parsing the file
 	 */
 	public T load(File f) throws IOException {
-		try (FileReader fr = new FileReader(f)) {
-			InputSource src = new InputSource(fr);
+		try (FileInputStream fis = new FileInputStream(f);
+		     InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+			InputSource src = new InputSource(isr);
 			src.setSystemId(f.getAbsolutePath());
 			return load(src);
 		}
@@ -157,6 +160,7 @@ public class XMLCodec<T> {
 	 * @throws JAXBException if there was a problem customizing the marshaller
 	 */
 	protected void customizeMarshaller(Marshaller m) throws JAXBException {
+		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8);
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	}
 }
