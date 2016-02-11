@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
@@ -147,7 +148,7 @@ public class XMLCodec<T> {
 		try {
 			Marshaller m = context.createMarshaller();
 			customizeMarshaller(m);
-			m.marshal(elem, os);
+			m.marshal(elem, new OutputStreamWriter(os, StandardCharsets.UTF_8));
 		} catch (JAXBException e) {
 			throw new IOException(e);
 		}
@@ -160,7 +161,7 @@ public class XMLCodec<T> {
 	 * @throws JAXBException if there was a problem customizing the marshaller
 	 */
 	protected void customizeMarshaller(Marshaller m) throws JAXBException {
-		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8);
+		m.setProperty(Marshaller.JAXB_ENCODING, "Unicode");
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	}
 }
