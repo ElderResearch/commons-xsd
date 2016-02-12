@@ -161,7 +161,7 @@ public class XMLCodec<T> {
 	 * @throws JAXBException if there was a problem customizing the marshaller
 	 */
 	protected void customizeMarshaller(Marshaller m) throws JAXBException {
-		m.setProperty(Marshaller.JAXB_ENCODING, "Unicode");
+		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.toString());
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 	}
 }
