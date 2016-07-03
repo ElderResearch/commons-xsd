@@ -1,3 +1,7 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Elder Research, Inc.
+ * All rights reserved.
+ *******************************************************************************/
 package com.datamininglab.commons.xsd;
 
 import java.io.File;
@@ -28,8 +32,8 @@ import org.xml.sax.XMLReader;
  * your root element to and from XML files or streams.
  * 
  * @author <a href="mailto:dimeo@datamininglab.com">John Dimeo</a>
- * @since Jan 15, 2016
  * @param <T> the root element type
+ * @since Jan 15, 2016
  */
 public class XMLCodec<T> {
 	private Class<T> c;
@@ -117,7 +121,7 @@ public class XMLCodec<T> {
 	/**
 	 * Save the root element to an output stream.
 	 * @param elem the root element to save
-	 * @param f the destination output stream
+	 * @param os the destination output stream
 	 * @throws IOException if there was a problem saving to the output stream
 	 */
 	public void save(JAXBElement<T> elem, OutputStream os) throws IOException {
@@ -156,7 +160,7 @@ public class XMLCodec<T> {
 	
 	/**
 	 * Customize (set properties on) the marshaller used by this codec. By default,
-	 * formatting ("pretty printing") is turned on.
+	 * formatting ("pretty printing") is turned on and UTF encoding is used.
 	 * @param m the marshaller
 	 * @throws JAXBException if there was a problem customizing the marshaller
 	 */
