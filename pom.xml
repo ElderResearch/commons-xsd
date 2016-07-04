@@ -47,8 +47,9 @@
 					<args>
 						<arg>-Ximmutable</arg>
 						<arg>-Xfluent-builder</arg>
-						<arg>-Xequals</arg>
-						<arg>-XhashCode</arg>
+						<arg>-XsimpleEquals</arg>
+						<arg>-XsimpleHashCode</arg>
+						<arg>-XtoString</arg>
 					</args>
 					<plugins>
 						<plugin>
