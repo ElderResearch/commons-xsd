@@ -49,7 +49,6 @@
 						<arg>-Xfluent-builder</arg>
 						<arg>-XsimpleEquals</arg>
 						<arg>-XsimpleHashCode</arg>
-						<arg>-XtoString</arg>
 					</args>
 					<plugins>
 						<plugin>
