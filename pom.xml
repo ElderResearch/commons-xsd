@@ -11,7 +11,7 @@
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.0.9-SNAPSHOT</version>
+	<version>0.0.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -49,7 +49,6 @@
 						<arg>-Xfluent-builder</arg>
 						<arg>-XsimpleEquals</arg>
 						<arg>-XsimpleHashCode</arg>
-						<arg>-XtoString</arg>
 					</args>
 					<plugins>
 						<plugin>
