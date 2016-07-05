@@ -19,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.sax.SAXSource;
@@ -178,5 +179,15 @@ public class XMLCodec<T> {
 		if (predeclaredNamespaceURIs.length > 0) {
 			m.setProperty(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
 		}
+	}
+	
+	/**
+	 * Gets the namespace of the JAXB-annotated package.
+	 * @param p the package
+	 * @return the namespace, or <tt>null</tt> if the package does not have an {@link XmlSchema} annotation
+	 */
+	public static String getNS(Package p) {
+		XmlSchema schema = p.getAnnotation(XmlSchema.class);
+		return schema == null? null : schema.namespace();
 	}
 }
