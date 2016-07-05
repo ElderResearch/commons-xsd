@@ -10,4 +10,13 @@
 	<artifactId>eri-commons-xsd</artifactId>
 	<name>ERI Commons - XSD Utilities</name>
 	<description>Utilities for XML schema documents (XSD)</description>
+	
+	<dependencies>
+	   <!-- Replace built-in JAXB implementation with reference implementation -->
+	   <dependency>
+	       <groupId>org.glassfish.jaxb</groupId>
+	       <artifactId>jaxb-runtime</artifactId>
+	       <version>2.2.11</version>
+	   </dependency>
+	</dependencies>
 </project>
