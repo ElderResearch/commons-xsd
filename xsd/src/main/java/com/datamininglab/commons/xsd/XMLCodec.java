@@ -19,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.sax.SAXSource;
@@ -36,16 +37,23 @@ import org.xml.sax.XMLReader;
  * @since Jan 15, 2016
  */
 public class XMLCodec<T> {
+	// Declared in MarshallerImpl, but is protected
+	protected static final String PREFIX_MAPPER = "com.sun.xml.bind.namespacePrefixMapper";
+	
 	private Class<T> c;
 	private JAXBContext context;
+	private String[] predeclaredNamespaceURIs;
 	
 	/**
 	 * Create a new codec.
 	 * @param c the root element class
+	 * @param predeclaredNamespaceURIs optional pairs of prefixes and namespace URIs to declare at the top of marshalled
+	 * XML files. This potentially avoids unnecessary redundant and nested namespace declarations.
 	 * @throws IOException if there was a problem instantiating the JAXB context
 	 */
-	public XMLCodec(Class<T> c) throws IOException {
+	public XMLCodec(Class<T> c, String... predeclaredNamespaceURIs) throws IOException {
 		this.c = c;
+		this.predeclaredNamespaceURIs = predeclaredNamespaceURIs;
 		try {
 			context = JAXBContext.newInstance(c);
 		} catch (JAXBException e) {
@@ -167,5 +175,19 @@ public class XMLCodec<T> {
 	protected void customizeMarshaller(Marshaller m) throws JAXBException {
 		m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.toString());
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		if (predeclaredNamespaceURIs.length > 0) {
+			m.setProperty(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
+		}
+	}
+	
+	/**
+	 * Gets the namespace of the JAXB-annotated package.
+	 * @param p the package
+	 * @return the namespace, or <tt>null</tt> if the package does not have an {@link XmlSchema} annotation
+	 */
+	public static String getNS(Package p) {
+		XmlSchema schema = p.getAnnotation(XmlSchema.class);
+		return schema == null? null : schema.namespace();
 	}
 }
