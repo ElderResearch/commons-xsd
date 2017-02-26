@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>com.datamininglab</groupId>
 		<artifactId>eri-maven-base</artifactId>
-		<version>3.0.2</version>
+		<version>3.1.2</version>
 	</parent>
 
 	<groupId>com.datamininglab.commons</groupId>
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
