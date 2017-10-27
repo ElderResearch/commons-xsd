@@ -2,7 +2,7 @@
  * Copyright (c) 2016 Elder Research, Inc.
  * All rights reserved.
  *******************************************************************************/
-package com.datamininglab.commons.xsd;
+package com.elderresearch.commons.xsd;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 
