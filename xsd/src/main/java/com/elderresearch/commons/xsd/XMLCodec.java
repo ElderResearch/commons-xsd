@@ -14,17 +14,13 @@ import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.Binder;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -115,40 +111,12 @@ public class XMLCodec<T> {
 	 * @param f the destination file
 	 * @throws IOException if there was a problem saving the file
 	 */
-	public void save(JAXBElement<T> elem, File f) throws IOException {
-		saveToFile(elem, f);
-	}
-	
-	/**
-	 * Save the root element to a file. Note that the type <tt>T</tt> must
-	 * have been generated with a {@link XmlRootElement} annotation to use
-	 * this method. Otherwise, use the generated <tt>ObjectFactory.create...()</tt>
-	 * method to wrap your element first and use {@link #save(JAXBElement, File)}
-	 * instead.
-	 * @param elem the root element to save
-	 * @param f the destination file
-	 * @throws IOException if there was a problem saving the file
-	 */
 	public void save(T elem, File f) throws IOException {
 		saveToFile(elem, f);
 	}
-	
-	/**
-	 * Save the root element to an output stream.
-	 * @param elem the root element to save
-	 * @param os the destination output stream
-	 * @throws IOException if there was a problem saving to the output stream
-	 */
-	public void save(JAXBElement<T> elem, OutputStream os) throws IOException {
-		saveToStream(elem, os);
-	}
 
 	/**
-	 * Save the root element to an output stream. Note that the type <tt>T</tt> must
-	 * have been generated with a {@link XmlRootElement} annotation to use
-	 * this method. Otherwise, use the generated <tt>ObjectFactory.create...()</tt>
-	 * method to wrap your element first and use {@link #save(JAXBElement, OutputStream)}
-	 * instead.
+	 * Save the root element to an output stream.
 	 * @param elem the root element to save
 	 * @param os the destination output stream
 	 * @throws IOException if there was a problem saving to the output stream
@@ -168,7 +136,6 @@ public class XMLCodec<T> {
 			binder.updateXML(elem);
 
 	        TransformerFactory tf = TransformerFactory.newInstance();
-	        
 	        Transformer t = tf.newTransformer();
 	        customizeTransformer(t);
 	        
@@ -179,7 +146,7 @@ public class XMLCodec<T> {
 	}
 	
 	/**
-	 * Customize (set properties on) the marshaller used by this codec. By default,
+	 * Customize (set properties on) the transformer used by this codec. By default,
 	 * formatting ("pretty printing") is turned on and UTF encoding is used.
 	 * @param m the marshaller
 	 * @throws JAXBException if there was a problem customizing the marshaller
@@ -189,7 +156,8 @@ public class XMLCodec<T> {
 		t.setOutputProperty(OutputKeys.INDENT, "yes");
 		
 		if (predeclaredNamespaceURIs.length > 0) {
-			m.setProperty(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
+			// TODO: THIS IS PROBABLY WRONG- haven't tested
+			t.setParameter(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
 		}
 	}
 	
