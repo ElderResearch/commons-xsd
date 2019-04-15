@@ -141,7 +141,7 @@ public class XMLCodec<T> {
 	        Transformer t = tf.newTransformer();
 	        customizeTransformer(t);
 	        
-	        t.transform(new DOMSource(newXML), new StreamResult(os));
+	        t.transform(new DOMSource(newXML), new StreamResult(new NewlineCollapseStream(os)));
 		} catch (JAXBException | TransformerException e) {
 			throw new IOException(e);
 		}
