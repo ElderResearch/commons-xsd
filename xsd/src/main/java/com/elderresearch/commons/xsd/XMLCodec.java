@@ -159,7 +159,7 @@ public class XMLCodec<T> {
 		
 		if (predeclaredNamespaceURIs.length > 0) {
 			// TODO: THIS IS PROBABLY WRONG- haven't tested
-			t.setParameter(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
+			// t.setParameter(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
 		}
 	}
 	

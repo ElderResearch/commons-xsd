@@ -12,11 +12,11 @@
 	<description>Utilities for XML schema documents (XSD)</description>
 	
 	<dependencies>
-	   <!-- Replace built-in JAXB implementation with reference implementation -->
+	   <!-- Use Moxy instead of built-in implementation -->
 	   <dependency>
-	       <groupId>org.glassfish.jaxb</groupId>
-	       <artifactId>jaxb-runtime</artifactId>
-	       <version>2.2.11</version>
-	   </dependency>
+		    <groupId>org.eclipse.persistence</groupId>
+		    <artifactId>org.eclipse.persistence.moxy</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
 	</dependencies>
 </project>
