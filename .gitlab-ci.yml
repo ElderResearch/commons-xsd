@@ -1,0 +1,2 @@
+---
+include: "https://gitlab.com/ElderResearch/devops/gitlab-ci/raw/master/templates/Maven.gitlab-ci.yml"
