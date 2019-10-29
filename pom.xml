@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.elderresearch</groupId>
 		<artifactId>eri-maven-base</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.1</version>
 	</parent>
 
 	<groupId>com.elderresearch.commons</groupId>
@@ -15,9 +15,9 @@
 	<packaging>pom</packaging>
 
 	<scm>
-		<developerConnection>scm:git:https://${scm}/eri-commons/eri-xsd.git</developerConnection>
-		<connection>scm:git:http://${scm}/eri-commons/eri-xsd.git</connection>
-		<url>http://${scm}/summary/eri-commons%2Feri-xsd.git</url>
+		<developerConnection>scm:git:git://${scm.commons}/xsd.git</developerConnection>
+		<connection>scm:git:git://${scm.commons}/xsd.git</connection>
+		<url>https://${scm.commons}/xsd</url>
 		<tag>HEAD</tag>
 	</scm>
 
