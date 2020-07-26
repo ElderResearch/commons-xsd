@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.elderresearch</groupId>
 		<artifactId>eri-maven-base</artifactId>
-		<version>5.2.1</version>
+		<version>5.2.2</version>
 	</parent>
 
 	<groupId>com.elderresearch.commons</groupId>
@@ -46,12 +46,16 @@
 					</executions>
 					<configuration>
 						<extensions>
-				            <extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:3.2.3</extension>
+							<extension>net.codesup.util:jaxb2-rich-contract-plugin:2.0.1</extension>
 				        </extensions>
 						<sourceRoot>${project.generatedSource.directory}/xjc</sourceRoot>
 						<xsdOptions>
 							<xsdOption>
 								<xsdDir>${xsd.schema.dir}</xsdDir>
+								<extensionArgs>
+									<extensionArg>-Ximmutable</extensionArg>
+                            		<extensionArg>-Xfluent-builder</extensionArg>
+								</extensionArgs>
 							</xsdOption>
 						</xsdOptions>
 					</configuration>
