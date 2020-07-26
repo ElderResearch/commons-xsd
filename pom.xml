@@ -20,62 +20,43 @@
 		<url>https://${scm.commons}/xsd</url>
 		<tag>HEAD</tag>
 	</scm>
+	
+	<properties>
+		<xsd.schema.dir>${basedir}/src/main/resources/schema</xsd.schema.dir>
+	</properties>
 
 	<modules>
 		<module>xsd</module>
 	</modules>
-
-	<dependencies>
-		<dependency>
-    		<groupId>org.glassfish.jaxb</groupId>
-    		<artifactId>jaxb-runtime</artifactId>
-    		<version>2.3.3</version>
-		</dependency>
-	</dependencies>
-
+	
 	<build>
 		<pluginManagement>
 			<plugins>
 				<!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
 				<plugin>
-				    <groupId>com.github.highsource</groupId>
-	    			<artifactId>maven-jaxb2-plugin</artifactId>
-	    			<version>master-SNAPSHOT</version>
+    				<groupId>org.apache.cxf</groupId>
+    				<artifactId>cxf-xjc-plugin</artifactId>
+				    <version>3.3.1</version>
 					<executions>
 						<execution>
 							<goals>
-								<goal>generate</goal>
+								<goal>xsdtojava</goal>
 							</goals>
 						</execution>
 					</executions>
 					<configuration>
-						<args>
-							<arg>-Ximmutable</arg>
-							<arg>-Xfluent-builder</arg>
-							<arg>-XsimpleEquals</arg>
-							<arg>-XsimpleHashCode</arg>
-						</args>
-						<plugins>
-							<plugin>
-								<groupId>net.codesup.util</groupId>
-								<artifactId>jaxb2-rich-contract-plugin</artifactId>
-								<version>1.15.0</version>
-							</plugin>
-							<plugin>
-								<groupId>org.jvnet.jaxb2_commons</groupId>
-								<artifactId>jaxb2-basics</artifactId>
-								<version>0.11.1</version>
-							</plugin>
-						</plugins>
+						<extensions>
+				            <extension>org.apache.cxf.xjcplugins:cxf-xjc-dv:3.2.3</extension>
+				        </extensions>
+						<sourceRoot>${project.generatedSource.directory}/xjc</sourceRoot>
+						<xsdOptions>
+							<xsdOption>
+								<xsdDir>${xsd.schema.dir}</xsdDir>
+							</xsdOption>
+						</xsdOptions>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-			</plugin>
-		</plugins>
 	</build>
 </project>
