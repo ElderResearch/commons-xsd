@@ -150,8 +150,8 @@ public class XMLCodec<T> {
 	/**
 	 * Customize (set properties on) the transformer used by this codec. By default,
 	 * formatting ("pretty printing") is turned on and UTF encoding is used.
-	 * @param m the marshaller
-	 * @throws JAXBException if there was a problem customizing the marshaller
+	 * @param t the transformer
+	 * @throws JAXBException if there was a problem customizing the transformer
 	 */
 	protected void customizeTransformer(Transformer t) throws JAXBException {
 		t.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.toString());
@@ -166,7 +166,7 @@ public class XMLCodec<T> {
 	/**
 	 * Gets the namespace of the JAXB-annotated package.
 	 * @param p the package
-	 * @return the namespace, or <tt>null</tt> if the package does not have an {@link XmlSchema} annotation
+	 * @return the namespace, or {@code null} if the package does not have an {@link XmlSchema} annotation
 	 */
 	public static String getNS(Package p) {
 		XmlSchema schema = p.getAnnotation(XmlSchema.class);
