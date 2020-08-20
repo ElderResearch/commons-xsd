@@ -2,9 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.elderresearch</groupId>
-		<artifactId>eri-maven-base</artifactId>
-		<version>5.2.2</version>
+		<groupId>com.elderresearch.maven-parent</groupId>
+		<artifactId>internal-parent</artifactId>
+		<version>6.0.5</version>
 	</parent>
 
 	<groupId>com.elderresearch.commons</groupId>
@@ -13,15 +13,10 @@
 	<description>Utilities for XML schema documents (XSD)</description>
 	<version>0.3.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<inceptionYear>2016</inceptionYear>
 
-	<scm>
-		<developerConnection>scm:git:git://${scm.commons}/xsd.git</developerConnection>
-		<connection>scm:git:git://${scm.commons}/xsd.git</connection>
-		<url>https://${scm.commons}/xsd</url>
-		<tag>HEAD</tag>
-	</scm>
-	
 	<properties>
+		<project.directory>${git.url.commons}/xsd</project.directory>
 		<xsd.schema.dir>${basedir}/src/main/resources/schema</xsd.schema.dir>
 	</properties>
 
