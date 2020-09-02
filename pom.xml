@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>com.elderresearch.maven-parent</groupId>
 		<artifactId>internal-parent</artifactId>
-		<version>6.0.5</version>
+		<version>6.0.7</version>
 	</parent>
 
 	<groupId>com.elderresearch.commons</groupId>
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.4.0</version>
+	<version>0.4.1</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 
@@ -60,6 +60,6 @@
 	</build>
 
   <scm>
-    <tag>0.4.0</tag>
+    <tag>0.4.1</tag>
   </scm>
 </project>
