@@ -17,10 +17,45 @@
 
 	<properties>
 		<project.directory>${git.url.commons}/xsd</project.directory>
+		<xsd.schema.dir>${basedir}/src/main/resources/schema</xsd.schema.dir>
 	</properties>
 
 	<modules>
 		<module>xsd</module>
-		<module>xjc</module>
 	</modules>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
+				<plugin>
+    				<groupId>org.apache.cxf</groupId>
+    				<artifactId>cxf-xjc-plugin</artifactId>
+				    <version>3.3.1</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>xsdtojava</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<extensions>
+							<extension>net.codesup.util:jaxb2-rich-contract-plugin:2.0.1</extension>
+				        </extensions>
+						<sourceRoot>${project.generatedSource.directory}/xjc</sourceRoot>
+						<xsdOptions>
+							<xsdOption>
+								<xsdDir>${xsd.schema.dir}</xsdDir>
+								<extensionArgs>
+									<extensionArg>-Ximmutable</extensionArg>
+                            		<extensionArg>-Xfluent-builder</extensionArg>
+								</extensionArgs>
+							</xsdOption>
+						</xsdOptions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
