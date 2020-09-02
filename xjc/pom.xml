@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.elderresearch.commons</groupId>
+		<artifactId>eri-commons-xsd-parent</artifactId>
+		<version>0.4.2-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>eri-commons-xjc</artifactId>
+	<name>ERI Commons - XJC Plugin</name>
+	<description>Importable configuration for the XJC JAXB plugin</description>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<project.directory />
+		<xsd.schema.dir>${basedir}/src/main/resources/schema</xsd.schema.dir>
+	</properties>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
+				<plugin>
+    				<groupId>org.apache.cxf</groupId>
+    				<artifactId>cxf-xjc-plugin</artifactId>
+				    <version>3.3.1</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>xsdtojava</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<extensions>
+							<extension>net.codesup.util:jaxb2-rich-contract-plugin:2.0.1</extension>
+				        </extensions>
+						<sourceRoot>${project.generatedSource.directory}/xjc</sourceRoot>
+						<xsdOptions>
+							<xsdOption>
+								<xsdDir>${xsd.schema.dir}</xsdDir>
+								<extensionArgs>
+									<extensionArg>-Ximmutable</extensionArg>
+                            		<extensionArg>-Xfluent-builder</extensionArg>
+								</extensionArgs>
+							</xsdOption>
+						</xsdOptions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>	
+</project>
