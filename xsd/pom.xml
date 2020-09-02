@@ -11,6 +11,10 @@
 	<name>ERI Commons - XSD Utilities</name>
 	<description>Utilities for XML schema documents (XSD)</description>
 	
+	<properties>
+		<project.directory />
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
