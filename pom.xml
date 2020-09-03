@@ -17,43 +17,59 @@
 
 	<properties>
 		<project.directory>${git.url.commons}/xsd</project.directory>
-		<xsd.schema.dir>${basedir}/src/main/resources/schema</xsd.schema.dir>
+		<xsd.schema.dir>${basedir}/src/main/resources/xsd</xsd.schema.dir>
+		<xsd.annotate.pkg>true</xsd.annotate.pkg>
+		<jaxb.runtime.version>2.3.3</jaxb.runtime.version>
 	</properties>
 
 	<modules>
 		<module>xsd</module>
 	</modules>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
 				<!-- Child projects should instantiate this plugin to generate classes for any XSDs -->
 				<plugin>
-    				<groupId>org.apache.cxf</groupId>
-    				<artifactId>cxf-xjc-plugin</artifactId>
-				    <version>3.3.1</version>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb2-plugin</artifactId>
+					<version>0.14.0</version>
 					<executions>
 						<execution>
 							<goals>
-								<goal>xsdtojava</goal>
+								<goal>generate</goal>
 							</goals>
 						</execution>
 					</executions>
 					<configuration>
-						<extensions>
-							<extension>net.codesup.util:jaxb2-rich-contract-plugin:2.0.1</extension>
-				        </extensions>
-						<sourceRoot>${project.generatedSource.directory}/xjc</sourceRoot>
-						<xsdOptions>
-							<xsdOption>
-								<xsdDir>${xsd.schema.dir}</xsdDir>
-								<extensionArgs>
-									<extensionArg>-Ximmutable</extensionArg>
-                            		<extensionArg>-Xfluent-builder</extensionArg>
-								</extensionArgs>
-							</xsdOption>
-						</xsdOptions>
+						<packageLevelAnnotations>${xsd.annotate.pkg}</packageLevelAnnotations>
+						<schemaDirectory>${xsd.schema.dir}</schemaDirectory>
+						<args>
+							<arg>-Ximmutable</arg>
+							<arg>-Xfluent-builder</arg>
+							<arg>-XsimpleEquals</arg>
+							<arg>-XsimpleHashCode</arg>
+						</args>
+						<plugins>
+							<plugin>
+								<groupId>net.codesup.util</groupId>
+								<artifactId>jaxb2-rich-contract-plugin</artifactId>
+								<version>2.0.1</version>
+							</plugin>
+							<plugin>
+								<groupId>org.jvnet.jaxb2_commons</groupId>
+								<artifactId>jaxb2-basics</artifactId>
+								<version>0.12.0</version>
+							</plugin>
+						</plugins>
 					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.glassfish.jaxb</groupId>
+							<artifactId>jaxb-runtime</artifactId>
+							<version>${jaxb.runtime.version}</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
