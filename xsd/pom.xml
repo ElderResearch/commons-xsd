@@ -4,22 +4,26 @@
 	<parent>
 		<groupId>com.elderresearch.commons</groupId>
 		<artifactId>eri-commons-xsd-parent</artifactId>
-		<version>0.4.1</version>
+		<version>0.5.0</version>
 	</parent>
 	
 	<artifactId>eri-commons-xsd</artifactId>
 	<name>ERI Commons - XSD Utilities</name>
 	<description>Utilities for XML schema documents (XSD)</description>
 	
+	<properties>
+		<project.directory />
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>2.3.3</version>
+			<version>${jaxb.runtime.version}</version>
 		</dependency>
 	</dependencies>
 
   <scm>
-    <tag>0.4.1</tag>
+    <tag>0.5.0</tag>
   </scm>
 </project>
