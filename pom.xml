@@ -11,7 +11,7 @@
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.5.0</version>
+	<version>0.6.0</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 
@@ -45,17 +45,16 @@
 						<packageLevelAnnotations>${xsd.annotate.pkg}</packageLevelAnnotations>
 						<schemaDirectory>${xsd.schema.dir}</schemaDirectory>
 						<args>
-							<arg>-Ximmutable</arg>
-							<arg>-Xfluent-builder</arg>
+							<arg>-Xfluent-api</arg>
 							<arg>-XsimpleEquals</arg>
 							<arg>-XsimpleHashCode</arg>
 						</args>
 						<plugins>
-							<plugin>
-								<groupId>net.codesup.util</groupId>
-								<artifactId>jaxb2-rich-contract-plugin</artifactId>
-								<version>2.0.1</version>
-							</plugin>
+							<dependency>
+							    <groupId>org.jvnet.jaxb2_commons</groupId>
+							    <artifactId>jaxb2-fluent-api</artifactId>
+							    <version>3.0</version>
+							</dependency>
 							<plugin>
 								<groupId>org.jvnet.jaxb2_commons</groupId>
 								<artifactId>jaxb2-basics</artifactId>
@@ -76,6 +75,6 @@
 	</build>
 
   <scm>
-    <tag>0.5.0</tag>
+    <tag>0.6.0</tag>
   </scm>
 </project>
