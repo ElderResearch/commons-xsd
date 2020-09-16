@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import javax.xml.bind.Binder;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlSchema;
@@ -44,6 +46,8 @@ import lombok.val;
  */
 public class XMLCodec<T> {
 	private Class<T> c;
+	private Function<T, JAXBElement<T>> toElement;
+	
 	private JAXBContext context;
 	private Binder<Node> binder;
 	private boolean wasUsedToLoad;
@@ -51,10 +55,13 @@ public class XMLCodec<T> {
 	/**
 	 * Create a new codec.
 	 * @param c the root element class
+	 * @param toElement a function that converts the element to a JAXB element. This is usually a method reference
+	 * to a JAXB-generated {@code ObjectFactory.create...} method.
 	 * @throws IOException if there was a problem instantiating the JAXB context
 	 */
-	public XMLCodec(Class<T> c) throws IOException {
+	public XMLCodec(Class<T> c, Function<T, JAXBElement<T>> toElement) throws IOException {
 		this.c = c;
+		this.toElement = toElement;
 		try {
 			context = JAXBContext.newInstance(c);
 			binder = context.createBinder();
@@ -95,7 +102,7 @@ public class XMLCodec<T> {
 	        
 	        DocumentBuilder db = dbf.newDocumentBuilder();
 	        Document document = db.parse(src);
-			
+	        
 			return binder.unmarshal(document, c).getValue();
 		} catch (JAXBException | SAXException | ParserConfigurationException e) {
 			throw new IOException(e);
@@ -124,13 +131,13 @@ public class XMLCodec<T> {
 		saveToStream(elem, os);
 	}
 	
-	private void saveToFile(Object elem, File f) throws IOException {
+	private void saveToFile(T elem, File f) throws IOException {
 		try (FileOutputStream fos = new FileOutputStream(f)) {
 			saveToStream(elem, fos);
 		}
 	}
 	
-	private void saveToStream(Object elem, OutputStream os) throws IOException {
+	private void saveToStream(T elem, OutputStream os) throws IOException {
 		try {
 			if (wasUsedToLoad) {
 				// By using a binder associated with the input, comments and other non-essential elements are preserved
@@ -144,7 +151,7 @@ public class XMLCodec<T> {
 				// Otherwise, use a normal marshaller
 	            val m = context.createMarshaller();
 	            customizeMarshaller(m);
-	            m.marshal(elem, new NewlineCollapseStream(os));	
+	            m.marshal(toElement.apply(elem), new NewlineCollapseStream(os));	
 			}
 		} catch (JAXBException | TransformerException e) {
 			throw new IOException(e);
