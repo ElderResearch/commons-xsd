@@ -11,7 +11,7 @@
 	<artifactId>eri-commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.6.1-SNAPSHOT</version>
+	<version>0.7.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 
