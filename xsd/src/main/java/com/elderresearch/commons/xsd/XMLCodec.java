@@ -62,6 +62,7 @@ public class XMLCodec<T> {
 		this.predeclaredNamespaceURIs = predeclaredNamespaceURIs;
 		try {
 			context = JAXBContext.newInstance(c);
+			binder = context.createBinder();
 		} catch (JAXBException e) {
 			throw new IOException(e);
 		}
@@ -100,7 +101,6 @@ public class XMLCodec<T> {
 	        DocumentBuilder db = dbf.newDocumentBuilder();
 	        Document document = db.parse(src);
 			
-			binder = context.createBinder();
 			return binder.unmarshal(document, c).getValue();
 		} catch (JAXBException | SAXException | ParserConfigurationException e) {
 			throw new IOException(e);
