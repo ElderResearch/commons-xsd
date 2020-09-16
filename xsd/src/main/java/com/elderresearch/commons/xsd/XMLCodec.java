@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import javax.xml.bind.Binder;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlSchema;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,6 +50,7 @@ public class XMLCodec<T> {
 	private JAXBContext context;
 	private Binder<Node> binder;
 	private String[] predeclaredNamespaceURIs;
+	private boolean wasUsedToLoad;
 	
 	/**
 	 * Create a new codec.
@@ -104,6 +106,8 @@ public class XMLCodec<T> {
 			return binder.unmarshal(document, c).getValue();
 		} catch (JAXBException | SAXException | ParserConfigurationException e) {
 			throw new IOException(e);
+		} finally {
+			wasUsedToLoad = true;
 		}
 	}
 	
@@ -135,23 +139,45 @@ public class XMLCodec<T> {
 	
 	private void saveToStream(Object elem, OutputStream os) throws IOException {
 		try {
-			val newXML = binder.updateXML(elem);
-			
-	        TransformerFactory tf = TransformerFactory.newInstance();
-	        Transformer t = tf.newTransformer();
-	        customizeTransformer(t);
-	        
-	        t.transform(new DOMSource(newXML), new StreamResult(new NewlineCollapseStream(os)));
+			if (wasUsedToLoad) {
+				// By using a binder associated with the input, comments and other non-essential elements are preserved
+				val newXML = binder.updateXML(elem);
+				val tf = TransformerFactory.newInstance();
+		        val t = tf.newTransformer();
+		        customizeTransformer(t);
+		        
+		        t.transform(new DOMSource(newXML), new StreamResult(new NewlineCollapseStream(os)));
+			} else {
+				// Otherwise, use a normal marshaller
+	            val m = context.createMarshaller();
+	            customizeMarshaller(m);
+	            m.marshal(elem, new NewlineCollapseStream(os));	
+			}
 		} catch (JAXBException | TransformerException e) {
 			throw new IOException(e);
 		}
 	}
 	
 	/**
-	 * Customize (set properties on) the transformer used by this codec. By default,
-	 * formatting ("pretty printing") is turned on and UTF encoding is used.
+	 * <p>Customize (set properties on) the marshaller used by this codec. By default,
+	 * formatting ("pretty printing") is turned on and UTF encoding is used.</p>
+	 * <p>Marshallers are used when XML is saved "from scratch" by this codec (without loading first).</p>
+	 * @param m the marshaller
+	 * @throws JAXBException if there was a problem customizing the transformer
+	 * @see #customizeTransformer(Transformer)
+	 */
+    protected void customizeMarshaller(Marshaller m) throws JAXBException {
+        m.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.toString());
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+    }
+	
+	/**
+	 * <p>Customize (set properties on) the transformer used by this codec. By default,
+	 * formatting ("pretty printing") is turned on and UTF encoding is used.</p>
+	 * <p>Transformers are used when XML loaded by this codec is then saved after modification.</p>
 	 * @param t the transformer
 	 * @throws JAXBException if there was a problem customizing the transformer
+	 * @see #customizeMarshaller(Marshaller)
 	 */
 	protected void customizeTransformer(Transformer t) throws JAXBException {
 		t.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.toString());
