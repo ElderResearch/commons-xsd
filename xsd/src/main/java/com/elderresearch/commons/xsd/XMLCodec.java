@@ -43,25 +43,18 @@ import lombok.val;
  * @since Jan 15, 2016
  */
 public class XMLCodec<T> {
-	// Declared in MarshallerImpl, but is protected
-	protected static final String PREFIX_MAPPER = "com.sun.xml.bind.namespacePrefixMapper";
-	
 	private Class<T> c;
 	private JAXBContext context;
 	private Binder<Node> binder;
-	private String[] predeclaredNamespaceURIs;
 	private boolean wasUsedToLoad;
 	
 	/**
 	 * Create a new codec.
 	 * @param c the root element class
-	 * @param predeclaredNamespaceURIs optional pairs of prefixes and namespace URIs to declare at the top of marshalled
-	 * XML files. This potentially avoids unnecessary redundant and nested namespace declarations.
 	 * @throws IOException if there was a problem instantiating the JAXB context
 	 */
-	public XMLCodec(Class<T> c, String... predeclaredNamespaceURIs) throws IOException {
+	public XMLCodec(Class<T> c) throws IOException {
 		this.c = c;
-		this.predeclaredNamespaceURIs = predeclaredNamespaceURIs;
 		try {
 			context = JAXBContext.newInstance(c);
 			binder = context.createBinder();
@@ -182,11 +175,6 @@ public class XMLCodec<T> {
 	protected void customizeTransformer(Transformer t) throws JAXBException {
 		t.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.toString());
 		t.setOutputProperty(OutputKeys.INDENT, "yes");
-		
-		if (predeclaredNamespaceURIs.length > 0) {
-			// TODO: THIS IS PROBABLY WRONG- haven't tested
-			// t.setParameter(PREFIX_MAPPER, new PredeclareNamespaceURIs(predeclaredNamespaceURIs));
-		}
 	}
 	
 	/**
