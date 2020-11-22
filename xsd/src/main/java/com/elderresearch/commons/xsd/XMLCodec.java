@@ -151,7 +151,7 @@ public class XMLCodec<T> {
 				// Otherwise, use a normal marshaller
 	            val m = context.createMarshaller();
 	            customizeMarshaller(m);
-	            m.marshal(toElement.apply(elem), new NewlineCollapseStream(os));	
+	            m.marshal(toElement == null? elem : toElement.apply(elem), new NewlineCollapseStream(os));	
 			}
 		} catch (JAXBException | TransformerException e) {
 			throw new IOException(e);
