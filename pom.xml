@@ -14,6 +14,13 @@
 	<version>0.8.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
+	
+	<repositories>
+       <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+       </repository>
+    </repositories>
 
 	<properties>
 		<project.directory>commons-xsd</project.directory>
