@@ -2,12 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.elderresearch.commons</groupId>
-		<artifactId>eri-commons-xsd-parent</artifactId>
+		<groupId>com.elderresearch.commons-xsd</groupId>
+		<artifactId>commons-xsd-parent</artifactId>
 		<version>0.7.1-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>eri-commons-xsd</artifactId>
+	<artifactId>commons-xsd</artifactId>
 	<name>ERI Commons - XSD Utilities</name>
 	<description>Utilities for XML schema documents (XSD)</description>
 	
