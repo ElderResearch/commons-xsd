@@ -3,20 +3,20 @@
 
 	<parent>
 		<groupId>com.elderresearch.maven-parent</groupId>
-		<artifactId>internal-parent</artifactId>
-		<version>6.0.7</version>
+		<artifactId>maven-parent</artifactId>
+		<version>6.0.9</version>
 	</parent>
 
-	<groupId>com.elderresearch.commons</groupId>
-	<artifactId>eri-commons-xsd-parent</artifactId>
+	<groupId>com.elderresearch.commons-xsd</groupId>
+	<artifactId>commons-xsd-parent</artifactId>
 	<name>ERI Commons - XSD Utilities (Parent POM)</name>
 	<description>Utilities for XML schema documents (XSD)</description>
-	<version>0.7.0</version>
+	<version>0.8.0</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2016</inceptionYear>
 
 	<properties>
-		<project.directory>${git.url.commons}/xsd</project.directory>
+		<project.directory>commons-xsd</project.directory>
 		<xsd.schema.dir>${basedir}/src/main/resources/xsd</xsd.schema.dir>
 		<xsd.annotate.pkg>true</xsd.annotate.pkg>
 		<jaxb.runtime.version>2.3.3</jaxb.runtime.version>
@@ -73,8 +73,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-  <scm>
-    <tag>0.7.0</tag>
-  </scm>
 </project>
